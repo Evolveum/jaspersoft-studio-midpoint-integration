@@ -33,6 +33,7 @@ import com.evolveum.midpoint.xml.ns._public.report.report_3.RemoteReportParamete
 import com.evolveum.midpoint.xml.ns._public.report.report_3.RemoteReportParametersType;
 import com.evolveum.midpoint.xml.ns._public.report.report_3.ReportPortType;
 //import com.evolveum.midpoint.schema.constants.SchemaConstants;
+import com.evolveum.prism.xml.ns._public.types_3.RawType;
 
 public class MidPointRemoteQueryExecutor extends JRAbstractQueryExecuter {
 
@@ -42,7 +43,7 @@ public class MidPointRemoteQueryExecutor extends JRAbstractQueryExecuter {
 	private String queryString;
 
 	public static final String NS_C = "http://midpoint.evolveum.com/xml/ns/public/common/common-3";
-	private static final String NS_AUDIT = "http://midpoint.evolveum.com/xml/ns/public/common/audit-3";
+//	private static final String NS_AUDIT = "http://midpoint.evolveum.com/xml/ns/public/common/audit-3";
 	public static final String NS_REPORT = "http://midpoint.evolveum.com/xml/ns/public/report/report-3";
 
 		protected String getParsedScript(String script) {
@@ -66,19 +67,9 @@ public class MidPointRemoteQueryExecutor extends JRAbstractQueryExecuter {
 
 	}
 
-	private Object createRemoteParamValue(String paramName, Object v, boolean audit) {
-		if (XsdTypeMapper.getJavaToXsdMapping(v.getClass()) != null) {
-			return v;
-		}
-
-		QName elementName = null;
-		if (audit){
-			elementName = new QName(NS_AUDIT, paramName);
-		} else {
-			elementName = new QName(NS_C, paramName);
-		}
-		
-		JAXBElement<Object> e = ModelClientUtil.toJaxbElement(elementName, v);
+	private Object createRemoteParamValue(String paramName, Object v) {
+//		QName elementName =  new QName(NS_REPORT, paramName);
+		JAXBElement<Object> e = toJaxbElement(new QName(NS_REPORT, "any"), Object.class, v);
 		return e;
 
 	}
@@ -100,19 +91,20 @@ public class MidPointRemoteQueryExecutor extends JRAbstractQueryExecuter {
 			RemoteReportParameterType remoteParam = new RemoteReportParameterType();
 			remoteParam.setParameterName(jrParam.getName());
 
+			ReportParameterType paramValue = new ReportParameterType();
 			Object value = getParameterValue(jrParam.getName());
 			if (value == null) {
 				remoteParams.getRemoteParameter().add(remoteParam);
 				continue;
 			}
 
-			ReportParameterType paramValue = new ReportParameterType();
+			
 			if (List.class.isAssignableFrom(value.getClass())) {
 				for (Object v : (List) value) {
-					paramValue.getAny().add(createRemoteParamValue(jrParam.getName(), v, audit));
+					paramValue.getAny().add(createRemoteParamValue(jrParam.getName(), v));
 				}
 			} else {
-				paramValue.getAny().add(createRemoteParamValue(jrParam.getName(), value, audit));
+				paramValue.getAny().add(createRemoteParamValue(jrParam.getName(), value));
 			}
 			remoteParam.setParameterValue(paramValue);
 			remoteParams.getRemoteParameter().add(remoteParam);

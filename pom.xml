@@ -84,7 +84,7 @@
 		<dependency>
 			<groupId>com.evolveum.midpoint.model</groupId>
 			<artifactId>model-client</artifactId>
-			<version>3.2-SNAPSHOT</version>
+			<version>3.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
@@ -149,7 +149,7 @@
 		<dependency>
 			<groupId>com.evolveum.midpoint.model</groupId>
 			<artifactId>report-api</artifactId>
-			<version>3.2-SNAPSHOT</version>
+			<version>3.3-SNAPSHOT</version>
 		</dependency>
 
 

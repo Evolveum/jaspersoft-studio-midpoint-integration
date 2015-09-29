@@ -40,7 +40,7 @@
     <context:property-placeholder properties-ref="clientProperties" />
     
     <bean id="proxyFactory" 
-    class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+    class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean" lazy-init="true">
     <property name="serviceClass" value="com.evolveum.midpoint.xml.ns._public.report.report_3.ReportPortType"/>
     <property name="address" value="${service.endpoint}"/>
     <property name="username" value="${auth.username}"/>
@@ -56,7 +56,7 @@
     </property>
   </bean>
  
-	 <bean id="wss4jInterceptor" class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor">
+	 <bean id="wss4jInterceptor" class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor" lazy-init="true">
 		<constructor-arg>
 			<map>
 			    <entry key="action" value="UsernameToken"/>
@@ -71,6 +71,6 @@
     factory-bean="proxyFactory" factory-method="create"/>
    
     
-<bean id="passwordClientHandler" class="com.evolveum.midpoint.jaspersoft.studio.integration.ClientPasswordHandler"/>
+<bean id="passwordClientHandler" class="com.evolveum.midpoint.jaspersoft.studio.integration.ClientPasswordHandler" lazy-init="true"/>
     
 </beans>

@@ -28,6 +28,65 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.portals.jetspeed-2</groupId>
+				<artifactId>jetspeed-unpack-maven-plugin</artifactId>
+				<version>2.3.0</version>
+				<executions>
+					<execution>
+						<id>unpack-messages</id>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<phase>install</phase>
+						<configuration>
+							<unpack>
+								<artifact>com.evolveum.midpoint.gui:admin-gui:war</artifact>
+								<targetDirectory>${project.basedir}/src/main/resources/localization</targetDirectory>
+								<resources>
+									<resource>
+										<path>WEB-INF/classes/localization/</path>
+										<include>Midpoint*.properties</include>
+									</resource>
+								</resources>
+							</unpack>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.evolveum.midpoint.gui</groupId>
+						<artifactId>admin-gui</artifactId>
+						<version>3.3-SNAPSHOT</version>
+						<type>war</type>
+					</dependency>
+				</dependencies>
+			</plugin>
+<!-- 		<plugin> -->
+<!--                 <groupId>org.apache.maven.plugins</groupId> -->
+<!--                 <artifactId>maven-dependency-plugin</artifactId> -->
+<!--                 <executions> -->
+<!--                     <execution> -->
+<!--                         <id>copy-messages-files</id> -->
+<!--                         <phase>package</phase> -->
+<!--                         <goals> -->
+<!--                             <goal>unpack</goal> -->
+<!--                         </goals> -->
+<!--                         <configuration> -->
+<!--                         	<artifactItems> -->
+<!--                                 <artifactItem> -->
+<!--                                     <groupId>com.evolveum.midpoint.gui</groupId> -->
+<!--     								<artifactId>admin-gui</artifactId> -->
+<!--                                     <version>3.3-SNAPSHOT</version> -->
+<!--                                     <type>war</type> -->
+<!--                                 </artifactItem> -->
+<!--                             </artifactItems> -->
+<!--                             <includes>**/Midpoint*.properties</includes> -->
+<!--                             <outputDirectory>${project.basedir}/src/main/resources</outputDirectory> -->
+<!--                         </configuration> -->
+<!--                     </execution> -->
+<!--                 </executions> -->
+<!--             </plugin> -->
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
@@ -166,6 +225,12 @@
 			<groupId>com.evolveum.midpoint.model</groupId>
 			<artifactId>report-api</artifactId>
 			<version>3.3-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>prism</artifactId>
+					<groupId>com.evolveum.midpoint.infra</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 

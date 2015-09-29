@@ -15,23 +15,7 @@
  */
 package com.evolveum.midpoint.prism.polystring;
 
-import com.evolveum.midpoint.prism.Matchable;
-import com.evolveum.midpoint.prism.PrismConstants;
-import com.evolveum.midpoint.prism.Recomputable;
-import com.evolveum.midpoint.prism.Structured;
-import com.evolveum.midpoint.prism.path.ItemPath;
-import com.evolveum.midpoint.prism.path.ItemPathSegment;
-import com.evolveum.midpoint.prism.path.NameItemPathSegment;
-import com.evolveum.midpoint.util.DebugDumpable;
-import com.evolveum.midpoint.util.DebugUtil;
-import com.evolveum.midpoint.util.MiscUtil;
-import com.evolveum.midpoint.util.QNameUtil;
-import com.evolveum.prism.xml.ns._public.types_3.PolyStringType;
-
 import java.io.Serializable;
-import java.util.regex.Pattern;
-
-import javax.xml.namespace.QName;
 
 /**
  * Polymorphic string. String that may have more than one representation at

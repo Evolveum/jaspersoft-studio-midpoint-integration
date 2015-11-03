@@ -46,6 +46,12 @@ public class MidPointRemoteQueryExecutorFactory extends AbstractQueryExecuterFac
 
 	
 	public MidPointRemoteQueryExecutorFactory() {
+		
+	}
+	
+	@Override
+	public JRQueryExecuter createQueryExecuter(JasperReportsContext jasperReportsContext, JRDataset dataset,
+			Map<String, ? extends JRValueParameter> parameters) throws JRException {
 		if (applicationContext == null) {
 			applicationContext = new ClassPathXmlApplicationContext(
 					"ctx-midpoint-jaspersoft.xml");
@@ -56,11 +62,6 @@ public class MidPointRemoteQueryExecutorFactory extends AbstractQueryExecuterFac
 					.getBean("reportPort");
 		}
 
-	}
-	
-	@Override
-	public JRQueryExecuter createQueryExecuter(JasperReportsContext jasperReportsContext, JRDataset dataset,
-			Map<String, ? extends JRValueParameter> parameters) throws JRException {
 		return new MidPointRemoteQueryExecutor(jasperReportsContext, dataset, parameters, reportPort);
 	}
 
@@ -68,6 +69,8 @@ public class MidPointRemoteQueryExecutorFactory extends AbstractQueryExecuterFac
 	public boolean supportsQueryParameterType(String className) {
 		return true;
 	}
+	
+	
 	
 
 }

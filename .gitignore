@@ -3,3 +3,5 @@
 .project
 
 /target
+/.idea
+/midpoint-jaspersoft-studio-integration.iml

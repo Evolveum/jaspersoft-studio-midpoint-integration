@@ -22,6 +22,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<properties>
 		<project.source.version>1.7</project.source.version>
+        <midpoint.version>3.6.1-SNAPSHOT</midpoint.version>
 	</properties>
 
 
@@ -30,7 +31,7 @@
 			<plugin>
 				<groupId>org.apache.portals.jetspeed-2</groupId>
 				<artifactId>jetspeed-unpack-maven-plugin</artifactId>
-				<version>2.3.0</version>
+				<version>2.3.1</version>
 				<executions>
 					<execution>
 						<id>unpack-messages</id>
@@ -56,11 +57,12 @@
 					<dependency>
 						<groupId>com.evolveum.midpoint.gui</groupId>
 						<artifactId>admin-gui</artifactId>
-						<version>3.3-SNAPSHOT</version>
+						<version>${midpoint.version}</version>
 						<type>war</type>
 					</dependency>
 				</dependencies>
 			</plugin>
+
 <!-- 		<plugin> -->
 <!--                 <groupId>org.apache.maven.plugins</groupId> -->
 <!--                 <artifactId>maven-dependency-plugin</artifactId> -->
@@ -89,7 +91,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>3.6.2</version>
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
@@ -156,10 +158,15 @@
 	</build>
 
 	<dependencies>
+        <dependency>
+            <groupId>org.eclipse.core</groupId>
+            <artifactId>runtime</artifactId>
+            <version>3.10.0-v20140318-2214</version>
+        </dependency>
 		<dependency>
 			<groupId>com.evolveum.midpoint.model</groupId>
 			<artifactId>model-client</artifactId>
-			<version>3.3-SNAPSHOT</version>
+			<version>${midpoint.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
@@ -224,7 +231,7 @@
 		<dependency>
 			<groupId>com.evolveum.midpoint.model</groupId>
 			<artifactId>report-api</artifactId>
-			<version>3.3-SNAPSHOT</version>
+			<version>${midpoint.version}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>prism</artifactId>

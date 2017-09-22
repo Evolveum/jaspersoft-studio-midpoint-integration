@@ -19,6 +19,8 @@ import java.util.Map;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
+import com.evolveum.midpoint.xml.ns._public.common.common_3.GetOperationOptionsType;
+import com.evolveum.midpoint.xml.ns._public.common.common_3.SelectorQualifiedGetOptionType;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRDataset;
 import net.sf.jasperreports.engine.JRException;
@@ -29,23 +31,20 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.query.JRAbstractQueryExecuter;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.core.internal.dtree.ObjectNotFoundException;
+//import org.eclipse.core.internal.dtree.ObjectNotFoundException;
 
 import com.evolveum.midpoint.model.client.ModelClientUtil;
 import com.evolveum.midpoint.prism.xml.XsdTypeMapper;
 import com.evolveum.midpoint.util.exception.SchemaException;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
-import com.evolveum.midpoint.xml.ns._public.common.api_types_3.GetOperationOptionsType;
 import com.evolveum.midpoint.xml.ns._public.common.api_types_3.ObjectListType;
-import com.evolveum.midpoint.xml.ns._public.common.api_types_3.SelectorQualifiedGetOptionType;
-import com.evolveum.midpoint.xml.ns._public.common.api_types_3.SelectorQualifiedGetOptionsType;
+import com.evolveum.midpoint.xml.ns._public.common.common_3.SelectorQualifiedGetOptionsType;
 import com.evolveum.midpoint.xml.ns._public.common.audit_3.AuditEventRecordListType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.ReportParameterType;
 import com.evolveum.midpoint.xml.ns._public.report.report_3.RemoteReportParameterType;
 import com.evolveum.midpoint.xml.ns._public.report.report_3.RemoteReportParametersType;
 import com.evolveum.midpoint.xml.ns._public.report.report_3.ReportPortType;
-//import com.evolveum.midpoint.schema.constants.SchemaConstants;
 import com.evolveum.prism.xml.ns._public.types_3.RawType;
 
 public class MidPointRemoteQueryExecutor extends JRAbstractQueryExecuter {
@@ -163,6 +162,7 @@ public class MidPointRemoteQueryExecutor extends JRAbstractQueryExecuter {
 
 			if (queryString != null) {
 				results = reportPort.processReport(queryString, converToReportParameterType(false), createRawOption());
+
 			} else {
 				if (script.contains("AuditEventRecord")) {
 					AuditEventRecordListType auditResults = reportPort.evaluateAuditScript(script, converToReportParameterType(true));
@@ -174,7 +174,7 @@ public class MidPointRemoteQueryExecutor extends JRAbstractQueryExecuter {
 					results = reportPort.evaluateScript(script, reportParamters);
 				}
 			}
-		} catch (SchemaException | ObjectNotFoundException e) {
+		} catch (SchemaException e) {
 			throw new JRException(e);
 		}
 		return new MidPointRemoteDataSource(results.getObject());
@@ -182,7 +182,7 @@ public class MidPointRemoteQueryExecutor extends JRAbstractQueryExecuter {
 	}
 	
 	private SelectorQualifiedGetOptionsType createRawOption(){
-		SelectorQualifiedGetOptionsType options = new SelectorQualifiedGetOptionsType();
+        SelectorQualifiedGetOptionsType options = new SelectorQualifiedGetOptionsType();
 		SelectorQualifiedGetOptionType option = new SelectorQualifiedGetOptionType();
 		GetOperationOptionsType getOptions = new GetOperationOptionsType();
 		getOptions.setRaw(Boolean.TRUE);
